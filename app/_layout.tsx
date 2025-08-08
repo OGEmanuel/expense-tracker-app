@@ -1,46 +1,36 @@
 import { GlobalStyles } from "@/constants/styles";
-import { Ionicons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import "@/global.css";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import "../global.css";
 
-export default function RootLayout() {
+const RootLayout = () => {
   return (
     <>
       <StatusBar style="auto" />
-      <Tabs
+      <Stack
         screenOptions={{
           headerStyle: {
             backgroundColor: GlobalStyles.colors.primary500,
           },
           headerTintColor: "white",
-          tabBarStyle: {
-            backgroundColor: GlobalStyles.colors.primary500,
-          },
-          tabBarActiveTintColor: GlobalStyles.colors.accent500,
         }}
       >
-        <Tabs.Screen
-          name={"index"}
+        <Stack.Screen
+          name="(tabs)"
           options={{
-            title: "Recent Expenses",
-            tabBarLabel: "Recent",
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="hourglass" size={size} color={color} />
-            ),
+            headerShown: false,
           }}
         />
-        <Tabs.Screen
-          name={"all-expenses/index"}
+        <Stack.Screen
+          name="modals"
           options={{
-            title: "All Expenses",
-            tabBarLabel: "All Expenses",
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="calendar" size={size} color={color} />
-            ),
+            presentation: "modal",
+            title: "Manage Expense",
           }}
         />
-      </Tabs>
+      </Stack>
     </>
   );
-}
+};
+
+export default RootLayout;

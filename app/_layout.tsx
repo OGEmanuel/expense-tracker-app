@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 const RootLayout = () => {
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <Stack
         screenOptions={{
           headerStyle: {

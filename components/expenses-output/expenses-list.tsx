@@ -1,9 +1,7 @@
 import "@/global.css";
 import { FlatList, ListRenderItem, View } from "react-native";
 import ExpenseItem from "./expense-item";
-import { DUMMY_EXPENSES } from "./expenses-output";
-
-type Expense = (typeof DUMMY_EXPENSES)[number];
+import { Expense } from "@/store/expense-control";
 
 const renderExpenseItem: ListRenderItem<Expense> = ({ item }) => {
   return <ExpenseItem {...item} />;

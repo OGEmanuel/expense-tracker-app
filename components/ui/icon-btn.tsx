@@ -9,10 +9,7 @@ const IconBtn = (props: {
 }) => {
   const { name, size, color, onPress } = props;
   return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => pressed && styles.pressed}
-    >
+    <Pressable onPress={onPress} className="active:opacity-75">
       <View className="rounded-3xl p-[6px] mx-2 my-0.5">
         <Ionicons name={name} size={size} color={color} />
       </View>

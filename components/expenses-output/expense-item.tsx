@@ -21,7 +21,7 @@ const ExpenseItem = (props: {
           },
         });
       }}
-      style={({ pressed }) => pressed && styles.pressed}
+      className="active:opacity-75"
     >
       <View
         className="p-3 my-2 flex-row justify-between rounded-[6px]"

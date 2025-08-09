@@ -1,7 +1,7 @@
-import Button from "@/components/ui/button";
+import ExpenseForm from "@/components/manage-expense/expense-form";
 import IconBtn from "@/components/ui/icon-btn";
 import { GlobalStyles } from "@/constants/styles";
-import { useExpenseStore } from "@/store/expense-control";
+import { Expense, useExpenseStore } from "@/store/expense-control";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { View } from "react-native";
 
@@ -10,7 +10,12 @@ const ModalScreen = () => {
   const editedExpenseId = params?.expenseId;
   const isEditing = !!editedExpenseId;
   const router = useRouter();
-  const { removeExpense, updateExpense, addExpense } = useExpenseStore();
+  const { removeExpense, updateExpense, addExpense, expenses } =
+    useExpenseStore();
+
+  const selectedExpense = expenses.find(
+    (expense) => expense.id === editedExpenseId
+  );
 
   const deleteExpenseHandler = () => {
     removeExpense(editedExpenseId);
@@ -19,21 +24,12 @@ const ModalScreen = () => {
   const cancelHandler = () => {
     router.back();
   };
-  const confirmHandler = () => {
+  const confirmHandler = (data: Omit<Expense, "id">) => {
     if (isEditing) {
-      updateExpense(editedExpenseId, {
-        amount: 75.5,
-        date: new Date("2025-08-7"),
-        description: "I'm just happy to be here really!!!!",
-      });
+      updateExpense(editedExpenseId, data);
     } else {
       {
-        addExpense({
-          amount: 75.5,
-          date: new Date("2025-08-7"),
-          description: "I'm just happy to be here really!",
-          id: "e01",
-        });
+        addExpense(data);
       }
     }
     router.back();
@@ -52,18 +48,12 @@ const ModalScreen = () => {
           backgroundColor: GlobalStyles.colors.primary800,
         }}
       >
-        <View className="flex-row justify-center items-center">
-          <Button
-            className="min-w-[7.5rem] mx-2"
-            mode="flat"
-            onPress={cancelHandler}
-          >
-            Cancel
-          </Button>
-          <Button className="min-w-[7.5rem] mx-2" onPress={confirmHandler}>
-            {isEditing ? "Update" : "Add"}
-          </Button>
-        </View>
+        <ExpenseForm
+          isEditing={isEditing}
+          onCancel={cancelHandler}
+          onSubmit={confirmHandler}
+          defaultValues={selectedExpense}
+        />
         {isEditing ? (
           <View
             className="mt-4 pt-2 border-t-2 items-center"

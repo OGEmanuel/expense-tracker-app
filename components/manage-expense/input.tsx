@@ -5,14 +5,17 @@ const Input = (props: {
   label: string;
   textInputConfig?: TextInputProps;
   className?: string;
+  invalid?: boolean;
 }) => {
-  const { label, textInputConfig, className } = props;
+  const { label, textInputConfig, className, invalid } = props;
   return (
     <View className={`mx-1 my-2 ${className}`}>
       <Text
         className="text-xs mb-1"
         style={{
-          color: GlobalStyles.colors.primary100,
+          color: invalid
+            ? GlobalStyles.colors.error500
+            : GlobalStyles.colors.primary100,
         }}
       >
         {label}
@@ -20,7 +23,9 @@ const Input = (props: {
       <TextInput
         {...textInputConfig}
         style={{
-          backgroundColor: GlobalStyles.colors.primary100,
+          backgroundColor: invalid
+            ? GlobalStyles.colors.error50
+            : GlobalStyles.colors.primary100,
           color: GlobalStyles.colors.primary700,
           textAlignVertical:
             textInputConfig && textInputConfig.multiline ? "top" : "center",
